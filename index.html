@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ede6d6">
+<meta name="theme-color" content="#201c16" media="(prefers-color-scheme: dark)">
+<meta name="description" content="새로보미 축제 헌책 향기주머니 만들기 부스 준비 체크리스트, 대상별 안내문, 운영 타임라인을 한 화면에서 관리하는 모바일 대시보드">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="향기주머니 허브">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>헌책향기주머니 운영 허브</title>
 <style>
   :root {
@@ -42,9 +57,9 @@
     --line: #453d2f;
   }
 
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 
   body {
     margin: 0;
@@ -53,7 +68,11 @@
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 84px;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   h1, h2, h3 {
@@ -105,7 +124,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 3px;
+    min-height: 50px;
     padding: 8px 4px 6px;
     background: none;
     border: none;
@@ -147,6 +168,7 @@
   .check-list { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
   .check-row {
     display: flex; align-items: flex-start; gap: 12px;
+    min-height: 46px;
     padding: 12px 2px; border-bottom: 1px solid var(--line);
   }
   .check-row input[type="checkbox"] {
@@ -204,7 +226,7 @@
     display: flex; gap: 6px; background: var(--paper-alt); padding: 4px; border-radius: 12px; margin-bottom: 18px;
   }
   .segmented button {
-    flex: 1; border: none; background: none; font: inherit; font-size: 0.86rem; font-weight: 600;
+    flex: 1; min-height: 44px; border: none; background: none; font: inherit; font-size: 0.86rem; font-weight: 600;
     color: var(--ink-soft); padding: 9px 4px; border-radius: 9px; cursor: pointer;
   }
   .segmented button[aria-selected="true"] { background: var(--card); color: var(--cypress-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
@@ -270,6 +292,8 @@
     .sign-card.active { display: block !important; }
   }
 </style>
+</head>
+<body>
 
 <div class="app">
 
@@ -527,3 +551,5 @@
     });
   })();
 </script>
+</body>
+</html>

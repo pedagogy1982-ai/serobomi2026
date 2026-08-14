@@ -1,0 +1,15 @@
+{
+  "name": "헌책향기주머니 운영 허브",
+  "short_name": "향기주머니 허브",
+  "description": "새로보미 축제 헌책 향기주머니 만들기 부스 준비 체크리스트, 안내문, 타임라인",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#ede6d6",
+  "theme_color": "#ede6d6",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
