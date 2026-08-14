@@ -68,7 +68,7 @@
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+    padding-bottom: 32px;
     overflow-x: hidden;
     overscroll-behavior-y: contain;
     min-height: 100vh;
@@ -84,14 +84,15 @@
 
   .app { max-width: 560px; margin: 0 auto; }
 
-  /* ---- top bar ---- */
+  /* ---- top bar (sticky: title + tabs together) ---- */
   .topbar {
     position: sticky;
     top: 0;
     z-index: 20;
     background: var(--paper);
     border-bottom: 2px solid var(--ink);
-    padding: 16px 20px 14px;
+    padding: calc(14px + env(safe-area-inset-top)) 20px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
   .eyebrow {
     font-size: 0.72rem;
@@ -108,45 +109,45 @@
   .tab-panel.active { display: block; animation: fade .18s ease; }
   @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
-  /* ---- bottom nav ---- */
-  .bottom-tabs {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    z-index: 30;
+  /* ---- top tabs (sits inside topbar, sticks with it) ---- */
+  .top-tabs {
     display: flex;
-    background: var(--card);
-    border-top: 1px solid var(--line);
-    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    gap: 4px;
+    margin-top: 14px;
+    padding: 4px;
+    background: var(--paper-alt);
+    border-radius: 12px;
   }
-  .bottom-tabs button {
+  .top-tabs button {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    min-height: 50px;
-    padding: 8px 4px 6px;
+    gap: 6px;
+    min-height: 42px;
+    padding: 8px 4px;
     background: none;
     border: none;
     font: inherit;
-    font-size: 0.74rem;
+    font-size: 0.82rem;
     color: var(--ink-soft);
-    border-radius: 10px;
+    border-radius: 9px;
     cursor: pointer;
   }
-  .bottom-tabs button .dot {
+  .top-tabs button .dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: transparent;
+    flex: 0 0 auto;
   }
-  .bottom-tabs button[aria-selected="true"] {
+  .top-tabs button[aria-selected="true"] {
     color: var(--cypress-strong);
     font-weight: 700;
-    background: var(--cypress-tint);
+    background: var(--card);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
-  .bottom-tabs button[aria-selected="true"] .dot { background: var(--cypress-strong); }
-  .bottom-tabs button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .top-tabs button[aria-selected="true"] .dot { background: var(--cypress-strong); }
+  .top-tabs button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
   /* ---- sections ---- */
   section.block { margin-top: 30px; }
@@ -279,11 +280,11 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .check-row, .bottom-tabs button, .segmented button { transition: background-color 0.15s ease, color 0.15s ease; }
+    .check-row, .top-tabs button, .segmented button { transition: background-color 0.15s ease, color 0.15s ease; }
   }
 
   @media print {
-    .topbar, .bottom-tabs, .segmented, .print-btn, footer.note { display: none !important; }
+    .topbar, .segmented, .print-btn, footer.note { display: none !important; }
     body { padding-bottom: 0; background: #fff; color: #000; }
     main { padding: 0; }
     .tab-panel { display: none !important; }
@@ -301,6 +302,12 @@
     <div class="eyebrow">제4회 새로보미 축제 · 우리사이, 온</div>
     <h1>헌책 향기주머니 운영 허브</h1>
     <div class="sub">10.30(금)–31(토) · 김제시민문화체육공원</div>
+
+    <nav class="top-tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="prep"><span class="dot"></span>준비</button>
+      <button role="tab" aria-selected="false" data-tab="signage"><span class="dot"></span>안내문</button>
+      <button role="tab" aria-selected="false" data-tab="timeline"><span class="dot"></span>일정</button>
+    </nav>
   </div>
 
   <main>
@@ -463,12 +470,6 @@
     </div>
 
   </main>
-
-  <nav class="bottom-tabs" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="prep"><span class="dot"></span>준비</button>
-    <button role="tab" aria-selected="false" data-tab="signage"><span class="dot"></span>안내문</button>
-    <button role="tab" aria-selected="false" data-tab="timeline"><span class="dot"></span>일정</button>
-  </nav>
 </div>
 
 <script>
@@ -507,7 +508,7 @@
     updateProgress();
 
     // bottom tab navigation
-    var tabButtons = Array.prototype.slice.call(document.querySelectorAll('.bottom-tabs button'));
+    var tabButtons = Array.prototype.slice.call(document.querySelectorAll('.top-tabs button'));
     var panels = {
       prep: document.getElementById('panel-prep'),
       signage: document.getElementById('panel-signage'),
